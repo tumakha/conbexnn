@@ -1,44 +1,46 @@
 # Container Based Execution Stack for Neural Networks (ConbexNN)
 This a project features web services to train and evaluate neural networks in the cloud using the Kubernetes container orchestration and a Java based microservice architecture. 
 
+## Local Setup 
+
+#### Setup with Kubernetes 1.18.2 and Docker 19.03.8 as container runtime
+
+See [instructions here](deploy/local_kubernetes/README.md)
+
+
 ## Demo VM
-See the project in Action by running a virtual machine. It comes preconfigured with Kubernetes running all necessary ConbexNN services and a neural network training set for testing.
+![Startup script](img/autostart.png)
 
-![VM Screenshot](deploy/vm/img/vm_small.jpg)
+After Login the VM starts `autostart.sh` initalizing ConbexNN. The Iris testset and a ViNNSL neural network are automatically imported.
 
-You can try out the RESTful API and GUI.
+### Browser
 
-* See [instructions here](/deploy/vm/)
+![Browser](img/vinnslnnui.png)
 
-## Setup 
+Firefox is preinstalled and opens predefined Tabs
 
-### Local
+* Kubernetes Dashboard
+* VINNSL-NN-UI (user interface showing imported neural networks)
+* Swagger API (documentation of the ConbexNN RESTful interface)
+* Status Tab (shows status of imported neural networks)
 
-#### Setup on local machine with Docker Edge
+#### ConbexNN Endpoints
 
-Preferred if you have a Docker hypervisor compatible machine
+https://kubernetes.host + endpoint
 
-You can setup and run this project with Docker Edge and Kubernetes enabled
-See [instructions here](/deploy/local_dockerce/)
+| endpoint        | Service                           |
+| --------------- | --------------------------------- |
+| /#/             | Vinnsl NN UI                      |
+| /vinnsl         | Vinnsl Service                    |
+| /status         | Vinnsl NN Status                  |
+| /worker/queue   | Worker Queue                      |
+| /storage        | Storage Service                   |
+| /train/overview | DL4J Training UI (while training) |
 
-#### Setup on local machine with Minikube
+### Postman
 
-You can setup and run this project with the Minikube VM
-See [instructions here](/deploy/local_minikube/)
+Use [ConbexNNVM.postman_collection.json](ConbexNNVM.postman_collection.json)
 
-### Cloud
+![Postman](img/postman.png)
 
-#### Setup in Google Cloud
 
-You can setup and run this project in Google Kubernetes Engine.
-See [instructions here](/deploy/cloud/google/)
-
-#### Setup in Microsoft Azure
-
-You can setup and run this project in Microsoft Azure Kubernetes Service.
-See [instructions here](/deploy/cloud/azure/)
-
-#### Setup in Amazon EKS
-
-You can setup and run this project in Microsoft EKS
-This could not be tested, as billing must be enabled and EKS is not included in the AWS student program. Read the [amazon Documentation](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html) on how to deploy Kubernetes Clusters.
