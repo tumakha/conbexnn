@@ -1,4 +1,4 @@
-# Setting up on local Kubernetes 1.18.2 and Docker 19.03.8 as container runtime
+# Setting up on local Kubernetes 1.18.2 and Docker 19.03.8
 
 ## Prerequisites
 
