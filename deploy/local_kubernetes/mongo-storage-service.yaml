@@ -21,7 +21,7 @@ metadata:
 spec:
   storageClassName: local-storage
   claimRef:
-    name: mongo-files-persistent-storage-mongo-0
+    name: mongo-files-persistent-storage-mongo-storage-0
     namespace: nsd
   capacity:
     storage: 5Gi
@@ -70,6 +70,7 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: mongo-files-persistent-storage
+      namespace: nsd
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: local-storage
