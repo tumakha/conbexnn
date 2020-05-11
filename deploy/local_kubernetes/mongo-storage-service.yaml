@@ -14,24 +14,15 @@ spec:
     role: mongo-storage
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mongo-files-persistent-storage-claim
-  namespace: nsd
-spec:
-  storageClassName: local-storage
-  accessModes: [ "ReadWriteOnce" ]
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: mongo-files-persistent-storage
   namespace: nsd
 spec:
   storageClassName: local-storage
+  claimRef:
+    name: mongo-files-persistent-storage-mongo-0
+    namespace: nsd
   capacity:
     storage: 5Gi
   accessModes:
@@ -41,7 +32,7 @@ spec:
     type: DirectoryOrCreate
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mongo-storage
   namespace: nsd
@@ -77,7 +68,12 @@ spec:
           env:
             - name: MONGO_SIDECAR_POD_LABELS
               value: "role=mongo,environment=test"
-      volumes:
-        - name: mongo-files-persistent-storage
-          persistentVolumeClaim:
-            claimName: mongo-files-persistent-storage-claim
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-files-persistent-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-storage
+      resources:
+        requests:
+          storage: 5Gi
