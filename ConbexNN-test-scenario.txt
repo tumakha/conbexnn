@@ -1,7 +1,7 @@
 1. Import Iris Dataset:
 curl --request POST \
   --url 'http://localhost/storage/upload' \
-  --form 'file=@/home/wednesday/projects/conbexnn/datasets/iris.txt'
+  --form 'file=@./datasets/iris.txt'
 
 {"file":"5eb99ff641f0fa00019da283"}
 
