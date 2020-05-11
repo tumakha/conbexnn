@@ -1,0 +1,28 @@
+1. Import Iris Dataset:
+curl --request POST \
+  --url 'http://localhost/storage/upload' \
+  --form 'file=@/home/wednesday/projects/conbexnn/datasets/iris.txt'
+
+{"file":"5eb99ff641f0fa00019da283"}
+
+2. Importing Iris Classification ViNNSL Network
+curl --request POST \
+  --url 'http://localhost/vinnsl/' \
+  --header 'Cache-Control: no-cache' \
+  --header 'Content-Type: application/xml' \
+  --data '<vinnsl>\n  <description>\n    <identifier><!-- will be generated --></identifier>\n    <metadata>\n      <paradigm>classification</paradigm>\n      <name>Backpropagation Classification</name>\n      <description>Iris Classification Example</description>\n      <version>\n        <major>1</major>\n        <minor>0</minor>\n      </version>\n    </metadata>\n    <creator>\n      <name>Ronald Fisher</name>\n      <contact>ronald.fisher@institution.com</contact>\n    </creator>\n    <problemDomain>\n      <propagationType type="feedforward">\n        <learningType>supervised</learningType>\n      </propagationType>\n      <applicationField>Classification</applicationField>\n      <networkType>Backpropagation</networkType>\n      <problemType>Classifiers</problemType>\n    </problemDomain>\n    <endpoints>\n      <train>true</train>\n      <retrain>true</retrain>\n      <evaluate>true</evaluate>\n    </endpoints>\n    <structure>\n	   <input>\n	    <ID>Input1</ID>\n	    <size>\n	    	<min>4</min>\n	    	<max>4</max>\n	    </size>\n	   </input>\n	   <hidden>\n	    <ID>Hidden1</ID>\n	    <size>\n	    	<min>3</min>\n	    	<max>3</max>\n	    </size>\n	   </hidden>\n	   <hidden>\n	    <ID>Hidden2</ID>\n	    <size>\n	    	<min>3</min>\n	    	<max>3</max>\n	    </size>\n	   </hidden>\n	   <output>\n	    <ID>Output1</ID>\n	    <size>\n	    	<min>3</min>\n	    	<max>3</max>\n	    </size>\n	   </output>\n	 </structure>\n	 <parameters>\n	 	<!--<valueparameter>learningrate</valueparameter>\n	 	<valueparameter>biasInput</valueparameter>\n	 	<valueparameter>biasHidden</valueparameter>\n	 	<valueparameter>momentum</valueparameter>\n	 	<comboparameter>ativationfunction</valueparameter>\n	 	<valueparameter>threshold</valueparameter>-->\n	 </parameters>\n	 <data>\n	 	<description>iris txt file with 3 classifications, 4 input vars</description>\n	 	<tabledescription>no input as table possible</tabledescription>\n	 	<filedescription>CSV file</filedescription>\n	 </data>\n  </description>\n<definition>\n<identifier><!-- will be generated --></identifier>\n<metadata>\n  <paradigm>classification</paradigm>\n  <name>Backpropagation Classification</name>\n  <description>Iris Classification Example</description>\n  <version>\n    <major>1</major>\n    <minor>0</minor>\n  </version>\n</metadata>\n<creator>\n  <name>Ronald Fisher</name>\n  <contact>ronald.fisher@institution.com</contact>\n</creator>\n<problemDomain>\n  <propagationType type="feedforward">\n    <learningType>supervised</learningType>\n  </propagationType>\n  <applicationField>Classification</applicationField>\n  <networkType>Backpropagation</networkType>\n  <problemType>Classifiers</problemType>\n</problemDomain>\n<endpoints>\n  <train>true</train>\n</endpoints>\n<executionEnvironment>\n	<serial>true</serial>\n</executionEnvironment>\n<structure>\n   <input>\n    <ID>Input1</ID>\n    <size>4</size>\n   </input>\n   <hidden>\n    <ID>Hidden1</ID>\n    <size>3</size>\n   </hidden>\n   <hidden>\n    <ID>Hidden2</ID>\n    <size>3</size>\n   </hidden>\n   <output>\n    <ID>Output1</ID>\n    <size>3</size>\n   </output>\n   <connections>\n   	<!--<fullconnected>\n   		<fromblock>Input1</fromblock>\n   		<toblock>Hidden1</toblock>\n   		<fromblock>Hidden1</fromblock>\n   		<toblock>Output1</toblock>\n   	</fullconnected>-->\n   </connections>\n </structure>\n <resultSchema>\n 	<instance>true</instance>\n 	<training>true</training>\n </resultSchema>\n <parameters>\n 	<valueparameter name="learningrate">0.1</valueparameter>\n	<comboparameter name="activationfunction">tanh</comboparameter>\n	<valueparameter name="iterations">500</valueparameter>\n	<valueparameter name="seed">6</valueparameter>\n </parameters>\n <data>\n 	<description>iris txt file with 3 classifications, 4 input vars</description>\n	<dataSchemaID>name/iris.txt</dataSchemaID>\n </data>\n</definition></vinnsl>'
+
+3. Check Neural Network created.
+curl http://localhost/status
+
+{"5eb9a0afff636b0001f45d77":"CREATED"}
+
+4. Start training
+curl --request PUT --url "http://localhost/worker/queue/5eb9a0afff636b0001f45d77"
+
+["5eb9a0afff636b0001f45d77"]
+
+5. Check status
+curl http://localhost/status
+{"5eb9a0afff636b0001f45d77":"INPROGRESS"}
+

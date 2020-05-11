@@ -7,6 +7,8 @@ This a project features web services to train and evaluate neural networks in th
 
 See [instructions here](deploy/local_kubernetes/README.md)
 
+## Test scenario 
+See [ConbexNN-test-scenario.txt](ConbexNN-test-scenario.txt)
 
 ## Demo VM
 ![Startup script](img/autostart.png)
